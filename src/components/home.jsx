@@ -1,16 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { ListGroup } from "react-bootstrap";
+import { InputGroup, FormControl, ListGroup } from "react-bootstrap";
 
 import Header from "./header";
 import { blogActions } from "../store/actions/blogActions";
 const Home = ({ blogs, history, getBlogs }) => {
+  const [blgs, setBlgs] = useState(blogs);
   useEffect(() => {
     getBlogs();
   }, []);
+
+  useEffect(() => {
+    setBlgs(blogs);
+  }, [blogs]);
+
   const onBtnClick = blg => {
     history.push({ pathname: "/blog", state: { blg } });
   };
+
+  const onSearch = txt => {
+    const filteredBlogs = blogs.filter(blg => blg.title.includes(txt));
+    setBlgs(filteredBlogs);
+  };
+
   const blog = (blog, i) => {
     return (
       <ListGroup.Item
@@ -26,7 +38,19 @@ const Home = ({ blogs, history, getBlogs }) => {
   return (
     <>
       <Header />
-      <ListGroup>{blogs.map((blg, i) => blog(blg, i))}</ListGroup>
+      <InputGroup className="m-3 w-25">
+        <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+        <FormControl
+          placeholder="Search Title"
+          aria-label="Search Title"
+          aria-describedby="basic-addon1"
+          onChange={e => onSearch(e.target.value)}
+        />
+      </InputGroup>
+      <br />
+      <ListGroup className="mx-3">
+        {blgs.map((blg, i) => blog(blg, i))}
+      </ListGroup>
     </>
   );
 };
