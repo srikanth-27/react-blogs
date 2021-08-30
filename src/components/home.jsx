@@ -39,7 +39,7 @@ const Home = ({ blogs, history, getBlogs }) => {
     <>
       <Header />
       <InputGroup className="m-3 w-25">
-        <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+        <InputGroup.Text id="basic-addon1"><i class="bi bi-search"/></InputGroup.Text>
         <FormControl
           placeholder="Search Title"
           aria-label="Search Title"

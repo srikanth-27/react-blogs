@@ -13,18 +13,21 @@ const blog = ({ comments, location, getCommentsById }) => {
   return (
     <div>
       <Header title={blg && blg.title} />
-      <Link to="/" className="m-5">
-        go back
-      </Link>
+      <div className="d-flex m-3 ml-5 pl-5">
+        <Link to="/" className="text-decoration-none">
+          <i class="bi bi-arrow-left" />
+          &nbsp;&nbsp;go back
+        </Link>
+      </div>
       <Card className="m-3">
         <Card.Body>
-          <Card.Title>Title : {blg.title}</Card.Title>
-          <Card.Text>{blg.body}</Card.Text>
+          <Card.Title>Title : {blg && blg.title}</Card.Title>
+          <Card.Text>{blg && blg.body}</Card.Text>
           <Button onClick={getComments}>Comment's</Button>
         </Card.Body>
       </Card>
       <ListGroup className="m-5">
-        {comments.map(cmt => (
+        {comments.map((cmt) => (
           <ListGroup.Item variant="secondary" className="my-2">
             <h5>Name : {cmt.name}</h5>
             <h6>Email : {cmt.email}</h6>
@@ -36,12 +39,12 @@ const blog = ({ comments, location, getCommentsById }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  comments: state.comments || []
+const mapStateToProps = (state) => ({
+  comments: state.comments || [],
 });
 
 const mapDispatchToProps = {
-  getCommentsById: blogActions.getCommentsById
+  getCommentsById: blogActions.getCommentsById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(blog);
